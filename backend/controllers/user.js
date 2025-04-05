@@ -8,7 +8,6 @@ const usersCtrl = {
     register: asyncHandler(async(req,res)=>{
     //take input
     const { username, email, password } = req.body;
-
     //validate inputs
     if(!username || !email || !password){
         throw new Error('all fields are required');

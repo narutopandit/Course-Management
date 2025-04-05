@@ -31,7 +31,7 @@ const sectionCtrl = {
 
     //get all section 
     list: asyncHandler(async(req, res)=>{
-        const section = await CourseSection.findById({});
+        const section = await CourseSection.find({});
         res.json(section);
     }),
 
