@@ -1,14 +1,23 @@
 const express = require('express');
 const isAuth = require('../middlleware/isAuthenciate');
-const { create } = require('../models/courseSection');
 const sectionCtrl = require('../controllers/section');
+const { isInstructor } = require('../middlleware/roleMiddleware');
 const CSectionRouter = express.Router();
 
-CSectionRouter.post('/api/v1/section/create/:courseId',isAuth,sectionCtrl.create);
-CSectionRouter.get('/api/v1/section/list',isAuth,sectionCtrl.list);
-CSectionRouter.get('/api/v1/section/:sectionId',isAuth,sectionCtrl.getSectionById);
-CSectionRouter.put('/api/v1/section/:sectionId',isAuth,sectionCtrl.update);
-CSectionRouter.delete('/api/v1/section/:sectionId',isAuth,sectionCtrl.delete);
+//create section
+CSectionRouter.post('/create/:courseId',isAuth,isInstructor,sectionCtrl.create);
+
+//show all section
+CSectionRouter.get('/list',isAuth,sectionCtrl.list);
+
+//get section by Id
+CSectionRouter.get('/:sectionId',isAuth,sectionCtrl.getSectionById);
+
+//update section
+CSectionRouter.put('/:sectionId',isAuth,isInstructor,sectionCtrl.update);
+
+//delete section
+CSectionRouter.delete('/:sectionId',isAuth,isInstructor,sectionCtrl.delete);
 
 
 module.exports = CSectionRouter;

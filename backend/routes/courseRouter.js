@@ -1,13 +1,24 @@
 const express = require('express');
 const isAuth = require('../middlleware/isAuthenciate');
 const courseCtrl = require('../controllers/course');
+const { isInstructor } = require('../middlleware/roleMiddleware');
 const courseRouter = express.Router();
 
-courseRouter.post('/api/v1/course/create',isAuth,courseCtrl.create);
-courseRouter.get('/api/v1/course/list',isAuth,courseCtrl.lists);
-courseRouter.get('/api/v1/course/:courseId',isAuth,courseCtrl.getCourseById);
-courseRouter.put('/api/v1/course/:courseId',isAuth,courseCtrl.update);
-courseRouter.delete('/api/v1/course/:courseId',isAuth,courseCtrl.delete);
+
+//create course
+courseRouter.post('/create',isAuth,isInstructor,courseCtrl.create);
+
+//show all the courses
+courseRouter.get('/list',isAuth,courseCtrl.lists);
+
+//get the course by Id
+courseRouter.get('/:courseId',isAuth,courseCtrl.getCourseById);
+
+//update the course
+courseRouter.put('/:courseId',isAuth,isInstructor,courseCtrl.update);
+
+//delete the course
+courseRouter.delete('/:courseId',isAuth,isInstructor,courseCtrl.delete);
 
 
 module.exports = courseRouter;
