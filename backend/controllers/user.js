@@ -75,7 +75,7 @@ const usersCtrl = {
 
     //get all user
     getAllUsers: asyncHandler(async(req, res)=>{
-        const courseId = req.params; // Get course ID from query parameters
+        const courseId = req.params.courseId; // Get course ID from query parameters
 
     if (!mongoose.Types.ObjectId.isValid(courseId)) {
       return res.status(400).json({ message: "Invalid course ID" });
@@ -151,7 +151,7 @@ const usersCtrl = {
 
    //get user by id
    getUserById: asyncHandler(async(req, res)=>{
-    const userId = req.params;
+    const userId = req.params.userId;
     const user = await User.findById({_id:userId}).populate({
         path:'progress',
         populate:{

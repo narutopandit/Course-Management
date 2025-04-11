@@ -34,7 +34,9 @@ app.use('/api/v1/progress',progressRouter)
 
 // ------Error Handler------
 app.use(errorHandler);
+
+// app.use("*", (req, res) => {
+//   res.status(404).json({ error: "Not Found" });
+// });
+
 app.listen(Port,()=>{console.log(`listening on ${Port}`)});
-app.use("*", (req, res) => {
-  res.status(404).json({ error: "Not Found" });
-});

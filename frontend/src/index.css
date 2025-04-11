@@ -1,1 +1,9 @@
 @import "tailwindcss";
+@theme {
+  --color-midnight: #050e18;
+  --color-customGray: #8b97ae;
+  --color-custombg: #041220;
+  --color-inputC: #05070a;
+  --color-borderG: #566481;
+  --color-borderHG: #232834;
+}
