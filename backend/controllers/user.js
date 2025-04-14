@@ -1,4 +1,4 @@
-const bycrpt = require('bcryptjs')
+const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
@@ -21,8 +21,8 @@ const usersCtrl = {
     }
 
     //hash password
-    const salt = bycrpt.genSaltSync(10)
-    const hashedPassword = await bycrpt.hash(password, salt);
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     //create user and send response
      const userCreate = await User.create({
@@ -48,7 +48,7 @@ const usersCtrl = {
             throw new Error('Invalid email or password');
         }
         //check password
-        const isMatch = await bycrpt.compare(password,user.password)
+        const isMatch = await bcrypt.compare(password,user.password)
         if(!isMatch){
             throw new Error('Invalid email or password');
         }
@@ -68,7 +68,9 @@ const usersCtrl = {
         res.json({
             message:'login success',
             token,
+            username:user.username,
             email:user.email,
+            role:user.role,
             id: user._id
         })
 }),

@@ -5,9 +5,9 @@ import {FiMail, FiLock} from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import * as yup from 'yup'
 import { LogInApi } from '../../Services/UserServices/userApi'
-import { AlertMessage } from './AlertMessage'
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../../redux/slices/authSlice'
+import AlertMessage from '../Alert/AlertMessage'
 
 //validation schema
 const validateSchema = yup.object({
@@ -31,9 +31,10 @@ const Login = () => {
         onSubmit: (values)=>{
             // console.log(values);
             mutation.mutateAsync(values).then((data)=>{
-                localStorage.setItem('token',data.token)
+              
+                localStorage.setItem('userInfo',JSON.stringify(data));
                 //dispatch
-                dispatch(loginAction(data.token))
+                dispatch(loginAction(data))
             }).catch((err)=>console.log(err));
   
         }
@@ -58,6 +59,12 @@ const Login = () => {
             <AlertMessage
               type="success"
               message="Login success you will be redirected soon..."
+            />
+          )}
+          {mutation.isPending && (
+            <AlertMessage
+              type="loading"
+              message="Loading please wait..."
             />
           )}
 
