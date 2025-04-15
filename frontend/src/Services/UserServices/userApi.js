@@ -17,7 +17,8 @@ export const RegisterApi = async(data)=>{
     const response =  await axios.post('http://localhost:3000/api/v1/users/register',{
          email:data?.email,
          password:data?.password,
-         username:data?.username
+         username:data?.username,
+         role:data?.role,
      })
      // console.log(response)
      return response.data;

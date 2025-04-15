@@ -7,6 +7,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useDispatch, useSelector } from "react-redux";
+import { FaBlog } from "react-icons/fa";
 // import { logout } from "../../redux/slices/authSlice";
 
 function classNames(...classes) {
@@ -33,7 +34,7 @@ export default function InstructorNavbar() {
   const data = {};
 
   return (
-    <Disclosure as="nav" className="bg-white ">
+    <Disclosure as="nav" className="bg-bgNav ">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -51,7 +52,10 @@ export default function InstructorNavbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-
+                <div className="flex flex-shrink-0 items-center">
+                  {/* Logo */}
+                  <FaBlog className="h-8 w-auto text-orange-500" />
+                </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   <Link
                     to="/instructor-add-course"

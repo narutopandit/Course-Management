@@ -9,9 +9,9 @@ const usersCtrl = {
     //register
     register: asyncHandler(async(req,res)=>{
     //take input
-    const { username, email, password } = req.body;
+    const { username, email, password ,role} = req.body;
     //validate inputs
-    if(!username || !email || !password){
+    if(!username || !email || !password || !role){
         throw new Error('all fields are required');
     }
     //check for user
@@ -21,14 +21,16 @@ const usersCtrl = {
     }
 
     //hash password
-    const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10)
+    // const hashedPassword = await bcrypt.hash(password, salt);
+    // console.log(hashedPassword);
 
     //create user and send response
      const userCreate = await User.create({
         username,
         email,
-        password:hashedPassword
+        password: await bcrypt.hash(password, salt),
+        role
      })
      res.json({
         username:userCreate.username,
@@ -44,11 +46,13 @@ const usersCtrl = {
         const {email, password} = req.body;
         //validate email
         const user = await User.findOne({email});
+        
         if(!user){
             throw new Error('Invalid email or password');
         }
         //check password
         const isMatch = await bcrypt.compare(password,user.password)
+
         if(!isMatch){
             throw new Error('Invalid email or password');
         }
@@ -57,12 +61,12 @@ const usersCtrl = {
             expiresIn: '3d'
         })
             // Set token in HttpOnly cookie
-            res.cookie("token", token, {
-              httpOnly: true, // The cookie is not accessible via JavaScript
-              secure: process.env.NODE_ENV === "production", // Use HTTPS in production
-              sameSite: "strict", // Strictly same site
-              maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
-            });
+            // res.cookie("token", token, {
+            //   httpOnly: true, // The cookie is not accessible via JavaScript
+            //   secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+            //   sameSite: "strict", // Strictly same site
+            //   maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+            // });
 
         //response
         res.json({

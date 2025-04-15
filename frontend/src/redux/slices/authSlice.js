@@ -10,7 +10,7 @@ import { createSlice } from "@reduxjs/toolkit"
     //Reducers
     reducers:{
         loginAction: (state, action)=>{
-            console.log(action.payload);
+            // console.log(action.payload);
             state.userInfo = action.payload;
         }
     }

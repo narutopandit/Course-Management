@@ -39,7 +39,9 @@ const courseCtrl = {
         user.courseCreated.push(course._id)
         await user.save()
         //response
-        res.json(course)
+        res.json({message:"Coursse Created!",
+            course
+        })
   }),
 
   //get all courses 

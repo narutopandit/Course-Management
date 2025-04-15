@@ -11,6 +11,7 @@ import Homepage from './components/Home/HomePage'
 import PrivateNavbar from './components/NavBar/PrivateNav'
 import InstructorNavbar from './components/NavBar/InstructorNav'
 import PublicNavbar from './components/NavBar/PublicNav'
+import AddCourse from './components/Course/AddCourse'
 
 function App() {
   const userData = JSON.parse(localStorage.getItem('userInfo'));
@@ -40,6 +41,7 @@ function App() {
           <Route path='/' element={<Homepage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/instructor-add-course' element={<AddCourse/>}/>
         </Routes>
       </BrowserRouter>
     </>

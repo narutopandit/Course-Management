@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useFormik } from 'formik'
 import React from 'react'
 import {FiMail, FiLock} from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { LogInApi } from '../../Services/UserServices/userApi'
 import { useDispatch } from 'react-redux'
@@ -17,6 +17,7 @@ const validateSchema = yup.object({
 
 const Login = () => {
     const dispatch =  useDispatch();
+    const navigate = useNavigate();
     const mutation = useMutation({
         mutationFn:LogInApi,
         mutationKey:['login']
@@ -33,6 +34,8 @@ const Login = () => {
             mutation.mutateAsync(values).then((data)=>{
               
                 localStorage.setItem('userInfo',JSON.stringify(data));
+                navigate('/')
+                window.location.reload();
                 //dispatch
                 dispatch(loginAction(data))
             }).catch((err)=>console.log(err));

@@ -7,7 +7,7 @@ import { FaBlog } from "react-icons/fa";
 
 export default function PublicNavbar() {
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-bgNav">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -32,13 +32,13 @@ export default function PublicNavbar() {
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   <Link
                     to="/"
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-700"
                   >
                     Home
                   </Link>
                   <Link
                     to="/reward-challenge"
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-700"
                   >
                     Code & Win
                   </Link>
@@ -64,7 +64,7 @@ export default function PublicNavbar() {
                     className="relative inline-flex items-center gap-x-1.5 rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 animate-pulse"
                   >
                     <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                    Track Your Progress
+                    Create an Account
                   </Link>
                 </div>
                 <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
