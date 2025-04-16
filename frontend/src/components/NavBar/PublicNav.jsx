@@ -25,10 +25,10 @@ export default function PublicNavbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex flex-shrink-0 items-center">
+                <Link className="flex flex-shrink-0 items-center">
                   {/* Logo */}
                   <FaBlog className="h-8 w-auto text-orange-500" />
-                </div>
+                </Link>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   <Link
                     to="/"

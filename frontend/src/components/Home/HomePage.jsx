@@ -4,8 +4,10 @@ import {
   FaUserGraduate,
   FaChalkboardTeacher,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
+  const navigate = useNavigate();
   return (
     <div>
       {/* Hero Section */}
@@ -16,7 +18,7 @@ const Homepage = () => {
         <p className="text-xl mb-6">
           Empower your skills with our comprehensive courses
         </p>
-        <button className="bg-white text-blue-600 px-6 py-2 rounded-md font-bold">
+        <button className="bg-white text-blue-600 px-6 py-2 rounded-md font-bold" onClick={()=>navigate('/allCourses')}>
           Explore Courses
         </button>
       </div>

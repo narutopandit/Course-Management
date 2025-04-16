@@ -12,6 +12,12 @@ import PrivateNavbar from './components/NavBar/PrivateNav'
 import InstructorNavbar from './components/NavBar/InstructorNav'
 import PublicNavbar from './components/NavBar/PublicNav'
 import AddCourse from './components/Course/AddCourse'
+import GetAllCourse from './components/Course/GetAllCourses'
+import CourseDetail from './components/Course/CourseDetails'
+import GetAllCourseIns from './components/Instructor/Course/InstructorCourses'
+import AddCourseSections from './components/Instructor/CSection/AddCourseSection'
+import InstructorCourseDetails from './components/Instructor/Course/InstructorCourseDetails'
+import UpdateCourse from './components/Instructor/Course/UpdateCourses'
 
 function App() {
   const userData = JSON.parse(localStorage.getItem('userInfo'));
@@ -42,6 +48,12 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/instructor-add-course' element={<AddCourse/>}/>
+          <Route  path='/allCourses' element={<GetAllCourse/>}/>
+          <Route path='/courses/:courseId' element={<CourseDetail/>}/>
+          <Route path='/Ins-courses/:courseId' element={<InstructorCourseDetails/>}/>
+          <Route path='/start-section/:courseId' element={<AddCourseSections/>}/>
+          <Route path='/instructor-courses' element={<GetAllCourseIns/>}/>
+          <Route path='/instructor-update-course/:courseId' element={<UpdateCourse/>}/>
         </Routes>
       </BrowserRouter>
     </>

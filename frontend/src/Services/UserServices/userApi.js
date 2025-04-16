@@ -1,9 +1,10 @@
 import axios from "axios";
+import { BASE_API } from "../../Utils/utils";
 
 // --------LogIn----------
 
 export const LogInApi = async(data)=>{
-   const response =  await axios.post('http://localhost:3000/api/v1/users/login',{
+   const response =  await axios.post(`${BASE_API}/users/login`,{
         email:data?.email,
         password:data?.password
     })
@@ -14,7 +15,7 @@ export const LogInApi = async(data)=>{
 
 // -------Register---------
 export const RegisterApi = async(data)=>{
-    const response =  await axios.post('http://localhost:3000/api/v1/users/register',{
+    const response =  await axios.post(`${BASE_API}/users/register`,{
          email:data?.email,
          password:data?.password,
          username:data?.username,

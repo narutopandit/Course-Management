@@ -9,10 +9,10 @@ const courseRouter = express.Router();
 courseRouter.post('/create',isAuth,isInstructor,courseCtrl.create);
 
 //show all the courses
-courseRouter.get('/list',isAuth,courseCtrl.lists);
+courseRouter.get('/list',courseCtrl.lists);
 
 //get the course by Id
-courseRouter.get('/:courseId',isAuth,courseCtrl.getCourseById);
+courseRouter.get('/:courseId',courseCtrl.getCourseById);
 
 //update the course
 courseRouter.put('/:courseId',isAuth,isInstructor,courseCtrl.update);
