@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
-const { model } = require('mongoose');
+const { model, default: mongoose } = require('mongoose');
 const Course = require('../models/Course');
 
 const usersCtrl = { 

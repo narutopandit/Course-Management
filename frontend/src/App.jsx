@@ -18,6 +18,9 @@ import GetAllCourseIns from './components/Instructor/Course/InstructorCourses'
 import AddCourseSections from './components/Instructor/CSection/AddCourseSection'
 import InstructorCourseDetails from './components/Instructor/Course/InstructorCourseDetails'
 import UpdateCourse from './components/Instructor/Course/UpdateCourses'
+import InstructorAllCourseSections from './components/Instructor/CSection/InstructorAllCourseSection'
+import UpdateCourseSection from './components/Instructor/CSection/UpdateCourseSections'
+import StudentRankList from './components/Student/Ranking'
 
 function App() {
   const userData = JSON.parse(localStorage.getItem('userInfo'));
@@ -51,9 +54,12 @@ function App() {
           <Route  path='/allCourses' element={<GetAllCourse/>}/>
           <Route path='/courses/:courseId' element={<CourseDetail/>}/>
           <Route path='/Ins-courses/:courseId' element={<InstructorCourseDetails/>}/>
-          <Route path='/start-section/:courseId' element={<AddCourseSections/>}/>
+          <Route path='/instructor-add-course-sections/:courseId' element={<AddCourseSections/>}/>
           <Route path='/instructor-courses' element={<GetAllCourseIns/>}/>
           <Route path='/instructor-update-course/:courseId' element={<UpdateCourse/>}/>
+          <Route path='/instructor-course-sections' element={<InstructorAllCourseSections/>}/>
+          <Route path='/update-course-section/:sectionId' element={<UpdateCourseSection/>}/>
+          <Route path='/students-position/:courseId' element={<StudentRankList/>}/>
         </Routes>
       </BrowserRouter>
     </>

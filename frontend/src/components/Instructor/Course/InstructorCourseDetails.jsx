@@ -25,6 +25,7 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
 import AlertMessage from "../../Alert/AlertMessage";
 import { deleteCourseAPI, GetCourseByIdApi } from "../../../Services/CourseServices/courseApi";
+import { deleteSectionAPI } from "../../../Services/CSectionServices/CsectionApi";
 
 const InstructorCourseDetails = ({ course }) => {
   //get the course id from params
@@ -38,12 +39,14 @@ const InstructorCourseDetails = ({ course }) => {
     data: courseData,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ["course"],
     queryFn: () => GetCourseByIdApi(courseId),
   });
   //delete course mutation
   const mutation = useMutation({ mutationFn: deleteCourseAPI });
+  const mutation2 = useMutation({ mutationFn: deleteSectionAPI });
   //handle delete
   const handleDelete = () => {
     mutation
@@ -51,6 +54,17 @@ const InstructorCourseDetails = ({ course }) => {
       .then((data) => {
         console.log("data", data);
         navigate("/instructor-courses");
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  //handle delete
+  const handleDelete2 = (sectionId) => {
+    mutation2
+      .mutateAsync(sectionId)
+      .then((data) => {
+        refetch();
       })
       .catch((error) => {
         console.log("error", error);
@@ -158,7 +172,7 @@ const InstructorCourseDetails = ({ course }) => {
 
           <Link
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-            to={`/instructor-course-sections/${courseId}`}
+            to={`/instructor-course-sections`}
           >
             <FaListUl className="mr-2" /> View Course Sections
           </Link>
@@ -185,7 +199,7 @@ const InstructorCourseDetails = ({ course }) => {
                     </button>
                   </Link>
                   <button
-                    onClick={() => handleDelete(section._id)}
+                    onClick={() => handleDelete2(section._id)}
                     className="p-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-200"
                   >
                     <FiTrash2 />

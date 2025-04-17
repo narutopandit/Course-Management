@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_API } from "../../Utils/utils";
-
+const Info = JSON.parse(localStorage.getItem('userInfo'));
 // --------LogIn----------
 
 export const LogInApi = async(data)=>{
@@ -24,4 +24,11 @@ export const RegisterApi = async(data)=>{
      // console.log(response)
      return response.data;
  }
- 
+
+
+ //--------Student-Ranking---------
+ export const getAllUsersAPI = async(courseId)=>{
+    const response =  await axios.get(`${BASE_API}/users/position/${courseId}`)
+     // console.log(response)
+     return response.data;
+ }

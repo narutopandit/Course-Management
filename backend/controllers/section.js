@@ -72,12 +72,12 @@ const sectionCtrl = {
         }
 
         //course associated with the section
-        const course = await Course.findById({sections:section._id});
-        if(course){
-            res.status(400);
-            throw new Error('Cannot delete section, course associated with it');
-            return;
-        }
+        const course = await Course.findOne({ sections: { $in: [section._id] } });
+        // if(course){
+        //     res.status(400);
+        //     throw new Error('Cannot delete section, course associated with it');
+        //     return;
+        // }
 
         //remove section
         await CourseSection.findByIdAndDelete(req.params.sectionId);
