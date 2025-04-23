@@ -32,3 +32,17 @@ export const RegisterApi = async(data)=>{
      // console.log(response)
      return response.data;
  }
+
+ //=======Get user profile=====
+export const getUserProfileAPI = async (courseId) => {
+    const response = await axios.get(
+      `${BASE_API}/users/profile/${courseId}`,
+      {
+        headers:{
+            Authorization: Info.token
+        }
+      }
+    );
+    return response?.data;
+  };
+  

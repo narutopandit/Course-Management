@@ -7,7 +7,7 @@ const userRouter = express.Router();
 userRouter.post('/register',usersCtrl.register);
 
 //get public profile
-userRouter.get('/profile',isAuth,usersCtrl.profile);
+userRouter.get('/profile/:courseId',isAuth,usersCtrl.profile);
 
 //login
 userRouter.post('/login',usersCtrl.login);

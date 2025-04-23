@@ -181,9 +181,9 @@ const usersCtrl = {
     //get user Id
     const id = req.user._id;    
     //get CourseId from query params
-    const courseId = req.query.courseId;
+    const courseId = req.params.courseId;
     //find user and populate
-    const user = await User.findById({id}).populate({
+    const user = await User.findById(id).populate({
       path:'progress',
       populate:[
         {
@@ -208,12 +208,12 @@ const usersCtrl = {
     //filter course from progress
     const progressCourse = courseId?user?.progress?.find((c)=>c.courseId._id.toString()===courseId):null;
     //prepare summary-->courseId,courseTitle,totalSections,completed,ongoing,notStarted
-    const progressSummary = null;
+    let progressSummary = null;
     if(progressCourse){
-      const totalSections = user.progress.sections?.length;
-      const completed=0,ongoing=0,notStarted=0;
+      let totalSections = user.progress.sections?.length;
+      let completed=0,ongoing=0,notStarted=0;
     
-    courseProgress.sections.forEach((s)=>{
+      progressCourse.sections.forEach((s)=>{
       if(s.status === 'Completed') completed++;
       else if(s.status === 'In Progress') ongoing++;
       else notStarted++;

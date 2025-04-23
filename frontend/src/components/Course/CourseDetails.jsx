@@ -122,7 +122,7 @@ const CourseDetail = ({ course }) => {
             onClick={handleStartCourse}
             className="flex items-center justify-center bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded transition duration-200"
           >
-            <FaPlay className="mr-2" /> Start Tracking Your Progress
+            <FaPlay className="mr-2" /> Apply
           </button>
 
           <Link

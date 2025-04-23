@@ -63,3 +63,17 @@ export const updateSectionAPI = async(data)=>{
     })
     return response.data
 }
+
+//------start section-----------
+export const startSectionAPI = async (data) => {
+    // console.log("data", data);
+    const response = await axios.post(`${BASE_API}/progress/start-section`, {
+        courseId: data?.courseId,
+        sectionId: data?.sectionId
+    }, {
+      headers:{
+        Authorization:Info.token
+      }
+    });
+    return response?.data;
+  };

@@ -52,15 +52,17 @@ export default function PrivateNavbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex flex-shrink-0 items-center">
+                <Link
+                to='/'
+                 className="flex flex-shrink-0 items-center">
                   {/* Logo */}
                   <FaBlog className="h-8 w-auto text-orange-500" />
-                </div>
+                </Link>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   {!isAdmin && (
                     <>
                       <Link
-                        to="/courses"
+                        to="/allCourses"
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                       >
                         courses

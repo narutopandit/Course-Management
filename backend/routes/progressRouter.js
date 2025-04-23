@@ -15,6 +15,6 @@ progressRouter.post('/apply',isAuth,isStudent,progressCtrl.applyCourse);
 progressRouter.put('/updateSection',isAuth,isAdmin,progressCtrl.updateSection);
 
 //start section
-progressRouter.post('/addSection',isAuth,progressCtrl.startSection);
+progressRouter.post('/start-section',isAuth,progressCtrl.startSection);
 
 module.exports = progressRouter;

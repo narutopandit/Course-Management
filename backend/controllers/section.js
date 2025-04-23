@@ -4,7 +4,7 @@ const Course = require('../models/Course');
 const CourseSection = require('../models/courseSection');
 
 const sectionCtrl = {
-    //Cretae section
+    //Create section
     create: asyncHandler(async(req, res)=>{
         const { sectionName } = req.body;
         if(!sectionName){
