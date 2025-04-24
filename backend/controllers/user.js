@@ -205,8 +205,10 @@ const usersCtrl = {
       res.status(404);
       throw new Error('user not found')
     }
+    
     //filter course from progress
-    const progressCourse = courseId?user?.progress?.find((c)=>c.courseId._id.toString()===courseId):null;
+    let progressCourse = courseId?user?.progress?.find((c)=>c.courseId._id.toString()===courseId):null;
+    
     //prepare summary-->courseId,courseTitle,totalSections,completed,ongoing,notStarted
     let progressSummary = null;
     if(progressCourse){
@@ -235,46 +237,61 @@ const usersCtrl = {
 
   //private profile
   privateProfile: asyncHandler(async(req, res)=>{
-    const id = req.user._id;
-    //find and polpulate user
-    const user = await User.findById({_id:id}).populate({
-      path:'progress',
-      populate:{
-        path:'courseId',
-        model:'Course',
-        populate:{
-          path:'sections',
-          model:'CourseSection'
-        }
-      }
-    })
-    if(!user){
-      res.status(404);
-      throw new Error('User not found')
-    }
-    //map each progress in user and get a progress summary
-    const progressCourse = user.progress.map((cp)=>{
-      const totalSections = cp.sections.length;
-      const completed=0,ongoing=0,notStarted=0;
-      cp.sections.forEach((s)=>{
-        if(s.status === 'Completed') completed++;
-        else if(s.status === 'In Progress') ongoing++;
-        else notStarted++;
-      })
-      return {
-        courseId: cp.courseId._id,
-        CourseTitle: cp.courseId._id,
-        totalSections,
-        completed,
-        ongoing,
-        notStarted
-      }
-    })
-    //res
-    res.json({
-      totalCourse:user.progress.length,
-      progressCourse
-    })
+     //get user Id
+     const id = req.user._id;  
+     //get CourseId from query params
+     const {courseId} = req.query;
+     //find user and populate
+     const user = await User.findById(id).populate({
+       path:'progress',
+       populate:[
+         {
+           path:'courseId',
+           model:'Course',
+           populate:{
+             path:'sections',
+             model:'CourseSection'
+           }
+         },
+         {
+           path:'sections.sectionId',
+           model:'CourseSection'
+         }
+       ]
+     });
+     //validate user
+     if(!user){
+       res.status(404);
+       throw new Error('user not found')
+     }
+     
+     //filter course from progress
+     let progressCourse = courseId?user?.progress?.find((c)=>c.courseId._id.toString()===courseId):null;
+     
+     //prepare summary-->courseId,courseTitle,totalSections,completed,ongoing,notStarted
+     let progressSummary = null;
+     if(progressCourse){
+       let totalSections = user.progress.sections?.length;
+       let completed=0,ongoing=0,notStarted=0;
+     
+       progressCourse.sections.forEach((s)=>{
+       if(s.status === 'Completed') completed++;
+       else if(s.status === 'In Progress') ongoing++;
+       else notStarted++;
+     })
+     progressSummary = {
+       courseId: courseId,
+       CourseTitle: progressCourse.title,
+       totalSections,
+       completed,
+       ongoing,
+       notStarted
+     }
+   }
+     //res-->user,course,summary
+     res.json({
+       user,progressCourse,progressSummary
+     })
   }),
 
    // Check if user is authenticated

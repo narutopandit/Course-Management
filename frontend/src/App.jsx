@@ -22,6 +22,7 @@ import InstructorAllCourseSections from './components/Instructor/CSection/Instru
 import UpdateCourseSection from './components/Instructor/CSection/UpdateCourseSections'
 import StudentRankList from './components/Student/Ranking'
 import StartSection from './components/Student/StartSection'
+import ProgressUpdate from './components/Student/UpdateProgress'
 
 function App() {
   const userData = JSON.parse(localStorage.getItem('userInfo'));
@@ -62,6 +63,7 @@ function App() {
           <Route path='/update-course-section/:sectionId' element={<UpdateCourseSection/>}/>
           <Route path='/students-position/:courseId' element={<StudentRankList/>}/>
           <Route path='/start-section/:courseId' element={<StartSection/>}/>
+          <Route path='/progress-update/:courseId' element={<ProgressUpdate/>}/>
         </Routes>
       </BrowserRouter>
     </>

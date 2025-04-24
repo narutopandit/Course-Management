@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
            },
            status:{
             type: String,
-            enum: ['Completed', 'In Progress', 'Not Started'],
+            enum: ['Completed', 'In Progress', 'Not Started','Paused','Away'],
             default: 'Not Started'
            }  
         }]

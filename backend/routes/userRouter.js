@@ -9,6 +9,9 @@ userRouter.post('/register',usersCtrl.register);
 //get public profile
 userRouter.get('/profile/:courseId',isAuth,usersCtrl.profile);
 
+//get private profile
+userRouter.get('/profile-private',isAuth,usersCtrl.privateProfile);
+
 //login
 userRouter.post('/login',usersCtrl.login);
 
@@ -18,8 +21,7 @@ userRouter.get('/:userId',isAuth,usersCtrl.getUserById);
 //get the position
 userRouter.get('/position/:courseId',usersCtrl.getAllUsers);
 
-//get private profile
-userRouter.get('/profile/private',isAuth,usersCtrl.privateProfile);
+
 
 //check for authentication
 userRouter.get(

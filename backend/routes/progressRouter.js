@@ -12,7 +12,7 @@ progressRouter.get('/',isAuth,progressCtrl.getUserProgress);
 progressRouter.post('/apply',isAuth,isStudent,progressCtrl.applyCourse);
 
 //update course section
-progressRouter.put('/updateSection',isAuth,isAdmin,progressCtrl.updateSection);
+progressRouter.put('/updateSection',isAuth,isStudent,progressCtrl.updateSection);
 
 //start section
 progressRouter.post('/start-section',isAuth,progressCtrl.startSection);
