@@ -18,7 +18,7 @@ const Homepage = () => {
         <p className="text-xl mb-6">
           Empower your skills with our comprehensive courses
         </p>
-        <button className="bg-white text-blue-600 px-6 py-2 rounded-md font-bold" onClick={()=>navigate('/allCourses')}>
+        <button className="bg-white text-blue-600 px-6 py-2 rounded-md font-bold cursor-pointer" onClick={()=>navigate('/allCourses')}>
           Explore Courses
         </button>
       </div>
@@ -61,7 +61,7 @@ const Homepage = () => {
         <h2 className="text-3xl font-bold mb-4">
           Start Your Learning Journey Today
         </h2>
-        <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-bold">
+        <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-bold cursor-pointer" onClick={()=>navigate('/register')} >
           Sign Up Now
         </button>
       </div>

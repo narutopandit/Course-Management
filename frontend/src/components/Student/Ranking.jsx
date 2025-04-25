@@ -24,6 +24,7 @@ const StudentRankList = () => {
       </h1>
       <div className="flex flex-col">
         {data?.map((student, index) => (
+          
           <div
             key={student?.id}
             className={`flex items-center justify-between p-4 my-2 rounded-lg shadow transition duration-300 ${

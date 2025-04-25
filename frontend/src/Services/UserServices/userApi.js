@@ -36,7 +36,7 @@ export const RegisterApi = async(data)=>{
  //=======Get user profile=====
 export const getUserProfileAPI = async (courseId) => {
     const response = await axios.get(
-      `${BASE_API}/users/profile/${courseId}`,
+      `${BASE_API}/users/profile-private?courseId=${courseId}`,
       {
         headers:{
             Authorization: Info.token
@@ -46,3 +46,15 @@ export const getUserProfileAPI = async (courseId) => {
     return response?.data;
   };
   
+  //------------dashBoard----------
+  export const getPrivateUserProfileAPI = async () => {
+    const response = await axios.get(
+      `${BASE_API}/users/dashboard`,
+      {
+        headers:{
+            Authorization: Info.token
+        }
+      }
+    );
+    return response?.data;
+  };

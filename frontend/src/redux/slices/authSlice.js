@@ -12,11 +12,19 @@ import { createSlice } from "@reduxjs/toolkit"
         loginAction: (state, action)=>{
             // console.log(action.payload);
             state.userInfo = action.payload;
+            state.loading = false;
+        },
+        logoutAction: (state)=>{
+            state.userInfo = null;
+            state.loading =false;
+        },
+        intialLoadingComplete: (state)=>{
+            state.loading = false;
         }
     }
  })
 
- export const {loginAction} = authSlice.actions;
+ export const {loginAction, logoutAction, intialLoadingComplete} = authSlice.actions;
 
  const authReducer = authSlice.reducer;
  export default authReducer;

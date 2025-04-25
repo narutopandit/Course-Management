@@ -1,13 +1,14 @@
 const express = require('express');
 const usersCtrl = require('../controllers/user');
 const isAuth = require('../middlleware/isAuthenciate');
+const { isStudent } = require('../middlleware/roleMiddleware');
 const userRouter = express.Router();
 
 //register
 userRouter.post('/register',usersCtrl.register);
 
-//get public profile
-userRouter.get('/profile/:courseId',isAuth,usersCtrl.profile);
+//get public dashboard
+userRouter.get('/dashboard',isAuth,isStudent,usersCtrl.studentDashboard);
 
 //get private profile
 userRouter.get('/profile-private',isAuth,usersCtrl.privateProfile);

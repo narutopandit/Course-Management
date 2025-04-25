@@ -108,7 +108,7 @@ const CourseDetail = ({ course }) => {
         {startCourseMutation.isError && (
           <AlertMessage
             type="error"
-            message={startCourseMutation.error?.response?.data?.message}
+            message="Please make an account or Login first...."
           />
         )}
         {startCourseMutation.isSuccess && (

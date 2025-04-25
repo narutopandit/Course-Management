@@ -177,11 +177,9 @@ const usersCtrl = {
   }),
 
   //user profile
-  profile: asyncHandler(async(req, res)=>{
+  studentDashboard: asyncHandler(async(req, res)=>{
     //get user Id
     const id = req.user._id;    
-    //get CourseId from query params
-    const courseId = req.params.courseId;
     //find user and populate
     const user = await User.findById(id).populate({
       path:'progress',
@@ -193,10 +191,6 @@ const usersCtrl = {
             path:'sections',
             model:'CourseSection'
           }
-        },
-        {
-          path:'sections.sectionId',
-          model:'CourseSection'
         }
       ]
     });
@@ -205,33 +199,30 @@ const usersCtrl = {
       res.status(404);
       throw new Error('user not found')
     }
-    
     //filter course from progress
-    let progressCourse = courseId?user?.progress?.find((c)=>c.courseId._id.toString()===courseId):null;
-    
-    //prepare summary-->courseId,courseTitle,totalSections,completed,ongoing,notStarted
-    let progressSummary = null;
-    if(progressCourse){
-      let totalSections = user.progress.sections?.length;
+    const progressCourse = user?.progress.map((cp)=>{
+      let totalSections = cp.courseId.sections.length;
       let completed=0,ongoing=0,notStarted=0;
     
-      progressCourse.sections.forEach((s)=>{
+      cp.sections.forEach((s)=>{
       if(s.status === 'Completed') completed++;
       else if(s.status === 'In Progress') ongoing++;
       else notStarted++;
-    })
-    progressSummary = {
-      courseId: courseId,
-      CourseTitle: progressCourse.title,
+    });
+
+    return{
+      courseId: cp.courseId._id,
+      CourseTitle: cp.courseId.title,
       totalSections,
       completed,
       ongoing,
       notStarted
     }
-  }
+  })
     //res-->user,course,summary
     res.json({
-      user,progressCourse,progressSummary
+      totalCourse:user.progress.length,
+      progressCourse
     })
   }),
 

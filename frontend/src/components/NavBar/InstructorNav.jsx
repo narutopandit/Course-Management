@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,17 +8,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useDispatch, useSelector } from "react-redux";
 import { FaBlog } from "react-icons/fa";
+import { intialLoadingComplete, logoutAction } from "../../redux/slices/authSlice";
 // import { logout } from "../../redux/slices/authSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function InstructorNavbar() {
-  //get the user from store
-  const { userProfile } = useSelector((state) => state.auth);
-  //isAdmin
-  const isInstructor = userProfile?.role === "instructor";
+function InstructorNavbar() {
 
   //navigate
   const navigate = useNavigate();
@@ -28,18 +25,23 @@ export default function InstructorNavbar() {
   //logout mutation
 
   //logout handler
+  //logout handler
   const logoutHandler = () => {
-    dispatch(logout());
+    localStorage.removeItem('userInfo')
+    dispatch(logoutAction());
+    navigate('/login');
   };
-  const data = {};
+  // const data = JSON.parse(localStorage.getItem('userInfo'));
+  // console.log(data);
 
   return (
     <Disclosure as="nav" className="bg-bgNav ">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 justify-start items-center">
-              <div className="flex justify-center flex-row w-full">
+          <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 justify-start items-center w-full">
+              <div className="flex flex-row w-full">
+                
                 <div className="-ml-2 mr-2 flex items-left md:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -153,7 +155,7 @@ export default function InstructorNavbar() {
                   Home
                 </Disclosure.Button>
               </Link>
-              <Link to="/courses">
+              <Link to="/instructor-courses">
                 <Disclosure.Button
                   as="button"
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
@@ -161,12 +163,12 @@ export default function InstructorNavbar() {
                   Courses
                 </Disclosure.Button>
               </Link>
-              <Link to="/student-dashboard">
+              <Link to="/instructor-course-sections">
                 <Disclosure.Button
                   as="button"
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
                 >
-                  My Dashboard
+                  My Course Section
                 </Disclosure.Button>
               </Link>
             </div>
@@ -182,23 +184,23 @@ export default function InstructorNavbar() {
                   </span>
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    {localStorage.getItem("username")}
+                  <div className="text-base font-medium text-red-700">
+                  {JSON.parse(localStorage.getItem('userInfo')).username}
                   </div>
                   <div className="text-sm font-medium text-gray-500">
-                    {data?.user?.username}
+                  {JSON.parse(localStorage.getItem('userInfo')).email}
                   </div>
                 </div>
               </div>
               <div className="mt-3 space-y-1">
-                <Link to="/dashboard/settings">
+                {/* <Link to="/dashboard/settings">
                   <Disclosure.Button
                     as="button"
                     className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
                   >
                     Settings
                   </Disclosure.Button>
-                </Link>
+                </Link> */}
                 <Disclosure.Button
                   as="button"
                   onClick={logoutHandler}
@@ -214,3 +216,5 @@ export default function InstructorNavbar() {
     </Disclosure>
   );
 }
+
+export default InstructorNavbar;  

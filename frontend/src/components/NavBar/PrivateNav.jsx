@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useDispatch, useSelector } from "react-redux";
 import { FaBlog } from "react-icons/fa";
+import { logoutAction } from "../../redux/slices/authSlice";
 // import { logout } from "../../redux/slices/authSlice";
 
 function classNames(...classes) {
@@ -16,9 +17,10 @@ function classNames(...classes) {
 
 export default function PrivateNavbar() {
   //get the user from store
-  const { userProfile } = useSelector((state) => state.auth);
-  //isAdmin
-  const isAdmin = userProfile?.role === "admin";
+  const { userInfo } = useSelector((state) => state.auth);
+  //isinstructor
+  const isInstructor = userInfo?.role === "instructor";
+  // console.log(isInstructor);
 
   //navigate
   const navigate = useNavigate();
@@ -29,7 +31,9 @@ export default function PrivateNavbar() {
 
   //logout handler
   const logoutHandler = () => {
-    dispatch(logout());
+    localStorage.removeItem('userInfo');
+    dispatch(logoutAction());
+    navigate('/login');
   };
   const data = {};
 
@@ -39,7 +43,7 @@ export default function PrivateNavbar() {
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-start items-center">
-              <div className="flex justify-center flex-row w-full">
+              <div className="flex flex-row w-full">
                 <div className="-ml-2 mr-2 flex items-left md:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -59,7 +63,7 @@ export default function PrivateNavbar() {
                   <FaBlog className="h-8 w-auto text-orange-500" />
                 </Link>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {!isAdmin && (
+                  {!isInstructor && (
                     <>
                       <Link
                         to="/allCourses"
@@ -76,8 +80,9 @@ export default function PrivateNavbar() {
                     </>
                   )}
 
-                  {isAdmin && (
+                  {isInstructor && (
                     <>
+
                       <Link
                         to="/add-course"
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -85,13 +90,13 @@ export default function PrivateNavbar() {
                         Add Course
                       </Link>
                       <Link
-                        to="/admin-courses"
+                        to="/instructor-courses"
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                       >
-                        Admin Courses
+                        instructor Courses
                       </Link>
                       <Link
-                        to="/admin-course-sections"
+                        to="/instructor-course-sections"
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                       >
                         Course Sections
@@ -184,7 +189,7 @@ export default function PrivateNavbar() {
                   Home
                 </Disclosure.Button>
               </Link>
-              <Link to="/courses">
+              <Link to="/allCourses">
                 <Disclosure.Button
                   as="button"
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
@@ -223,11 +228,11 @@ export default function PrivateNavbar() {
                   )} */}
                 </div>
                 <div className="ml-3">
-                  <div className="text-base font-medium text-gray-800">
-                    {localStorage.getItem("username")}
+                  <div className="text-base font-medium text-blue-800">
+                    {JSON.parse(localStorage.getItem('userInfo')).username}
                   </div>
                   <div className="text-sm font-medium text-gray-500">
-                    {data?.user?.username}
+                    {JSON.parse(localStorage.getItem('userInfo')).email}
                   </div>
                 </div>
               </div>

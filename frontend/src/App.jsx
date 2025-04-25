@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import Login from './components/User/Login'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginAction } from './redux/slices/authSlice'
+import { intialLoadingComplete, loginAction } from './redux/slices/authSlice'
 import Register from './components/User/register'
 import Homepage from './components/Home/HomePage'
 import PrivateNavbar from './components/NavBar/PrivateNav'
@@ -23,22 +23,39 @@ import UpdateCourseSection from './components/Instructor/CSection/UpdateCourseSe
 import StudentRankList from './components/Student/Ranking'
 import StartSection from './components/Student/StartSection'
 import ProgressUpdate from './components/Student/UpdateProgress'
+import Dashboard from './components/Student/StudentDashboard'
+import AuthRoute from './Auth/AuthRoute'
+
+
 
 function App() {
-  const userData = JSON.parse(localStorage.getItem('userInfo'));
+  // const userData = JSON.parse(localStorage.getItem('userInfo')); // REMOVE THIS LINE
+
+  const { userInfo, loading } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(loginAction(localStorage.getItem('userInfo')))
-  },[dispatch]);
-  // const userData = useSelector((state)=>state?.auth?.userInfo);
+  useEffect(() => {
+    const userInfoString = localStorage.getItem('userInfo');
+    if (userInfoString) {
+      try {
+        const userInfo = JSON.parse(userInfoString);
+        dispatch(loginAction(userInfo));
+      } catch (error) {
+        console.error("Error parsing userInfo from localStorage:", error);
+        // Handle the error appropriately (e.g., clear local storage)
+      }
+    }
+    dispatch(intialLoadingComplete()); // Move this line here
+  }, [dispatch]);
+
+  // const userData = useSelector((state)=>state?.auth?.userInfo); // REMOVE THIS LINE
   // console.log(userData.role)
   // Add a check for userData before accessing userData.role
   let navbar;
-  if (userData) {
-    navbar = (userData?.role === 'student') ? <PrivateNavbar /> :
-             (userData?.role === 'instructor') ? <InstructorNavbar /> :
+  if (userInfo) { // Change userData to userInfo
+    navbar = (userInfo?.role === 'student') ? <PrivateNavbar /> : // Change userData to userInfo
+             (userInfo?.role === 'instructor') ? <InstructorNavbar /> : // Change userData to userInfo
              <PublicNavbar />;
   } else {
     navbar = <PublicNavbar />; // Or some other default
@@ -52,22 +69,59 @@ function App() {
           <Route path='/' element={<Homepage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/instructor-add-course' element={<AddCourse/>}/>
+          <Route path='/instructor-add-course' element={<AuthRoute><AddCourse/></AuthRoute> }/>
           <Route  path='/allCourses' element={<GetAllCourse/>}/>
           <Route path='/courses/:courseId' element={<CourseDetail/>}/>
-          <Route path='/Ins-courses/:courseId' element={<InstructorCourseDetails/>}/>
-          <Route path='/instructor-add-course-sections/:courseId' element={<AddCourseSections/>}/>
-          <Route path='/instructor-courses' element={<GetAllCourseIns/>}/>
-          <Route path='/instructor-update-course/:courseId' element={<UpdateCourse/>}/>
-          <Route path='/instructor-course-sections' element={<InstructorAllCourseSections/>}/>
-          <Route path='/update-course-section/:sectionId' element={<UpdateCourseSection/>}/>
+          <Route path='/Ins-courses/:courseId' element={
+            <AuthRoute>
+              <InstructorCourseDetails/>
+            </AuthRoute>
+            }/>
+          <Route path='/instructor-add-course-sections/:courseId' element={
+            <AuthRoute>
+              <AddCourseSections/>
+            </AuthRoute>
+            }/>
+          <Route path='/instructor-courses' element={
+            <AuthRoute>
+              <GetAllCourseIns/>
+            </AuthRoute>
+            }/>
+          <Route path='/instructor-update-course/:courseId' element={
+            <AuthRoute>
+              <UpdateCourse/>
+            </AuthRoute>
+            }/>
+          <Route path='/instructor-course-sections' element={
+            <AuthRoute>
+              <InstructorAllCourseSections/>
+            </AuthRoute>
+            }/>
+          <Route path='/update-course-section/:sectionId' element={
+            <AuthRoute>
+              <UpdateCourseSection/>
+            </AuthRoute>
+            }/>
           <Route path='/students-position/:courseId' element={<StudentRankList/>}/>
-          <Route path='/start-section/:courseId' element={<StartSection/>}/>
-          <Route path='/progress-update/:courseId' element={<ProgressUpdate/>}/>
+          <Route path='/start-section/:courseId' element={
+            <AuthRoute>
+              <StartSection/>
+            </AuthRoute>
+            }/>
+          <Route path='/progress-update/:courseId' element={
+            <AuthRoute>
+              <ProgressUpdate/>
+            </AuthRoute>
+            }/>
+          <Route path='/student-dashboard' element={
+            <AuthRoute>
+              <Dashboard/>
+            </AuthRoute>
+            }/>
         </Routes>
       </BrowserRouter>
     </>
   )
 }
 
-export default App
+export default App;

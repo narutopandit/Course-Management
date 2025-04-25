@@ -25,7 +25,7 @@ export default function PublicNavbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <Link className="flex flex-shrink-0 items-center">
+                <Link className="flex flex-shrink-0 items-center" to='/'>
                   {/* Logo */}
                   <FaBlog className="h-8 w-auto text-orange-500" />
                 </Link>
@@ -43,7 +43,7 @@ export default function PublicNavbar() {
                     Code & Win
                   </Link>
                   <Link
-                    to="/courses"
+                    to="/allCourses"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
                     Track Your Progress
